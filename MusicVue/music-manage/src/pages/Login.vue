@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {mixin} from "../mixins/index"
+import {mixin} from "../mixins/index";
 import {getLoginStatus} from "../api/index";
 export default {
   mixins:[mixin],
@@ -46,6 +46,8 @@ export default {
       getLoginStatus(params)
         .then((res) =>{
           if(res.code == 1){
+            localStorage.setItem('userName',this.ruleForm.username);
+            this.$router.push("info");
             this.notify('登录成功','success');
           }else{
             this.notify('登录失败','error');
