@@ -7,9 +7,13 @@ import com.czs.music.utils.Consts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,7 +79,6 @@ public class SingerController {
         String id = request.getParameter("id").trim();  //主键
         String name = request.getParameter("name").trim();  //姓名
         String sex = request.getParameter("sex").trim();    //性别
-        String picture = request.getParameter("picture").trim();    //头像
         String birth = request.getParameter("birth").trim();    //生日
         String location = request.getParameter("location").trim();  //地区
         String introduction = request.getParameter("introduction").trim();  //简介
@@ -92,7 +95,6 @@ public class SingerController {
         singer.setId(Integer.parseInt(id));
         singer.setName(name);
         singer.setSex(new Byte(sex));
-        singer.setPicture(picture);
         singer.setBirth(brithDate);
         singer.setLocation(location);
         singer.setIntroduction(introduction);
@@ -151,4 +153,53 @@ public class SingerController {
         String sex = request.getParameter("sex").trim();  //歌手的名字
         return singerService.singerOfSex(Integer.parseInt(sex));
     }
+
+    /**
+     * 更新歌手图片
+     */
+    @RequestMapping(value = "/updateSingerPicture",method = RequestMethod.POST)
+    public Object updateSingerPicture(@RequestParam("file") MultipartFile avatorFile,@RequestParam("id")int id){
+        JSONObject jsonObject = new JSONObject();
+        if (avatorFile.isEmpty()){
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"文件上传失败");
+            return jsonObject;
+        }
+        //文件名=当前时间到毫秒+原来的文件名
+        String fileName = System.currentTimeMillis()+avatorFile.getOriginalFilename();
+        //文件路径
+        String filePath = System.getProperty("user.dir")+System.getProperty("file.separator")+"img"+System.getProperty("file.separator")+"singerPicture";
+        //如果文件路径不存在，则新增该路径
+        File file1 = new File(filePath);
+        if(!file1.exists()){
+            file1.mkdir();
+        }
+        //实际的文件地址
+        File dest = new File(filePath+System.getProperty("file.separator")+fileName);
+        //存储到数据库里的相对文件地址
+        String storeAvatorPath = "/img/singerPicture/"+fileName;
+        try {
+            avatorFile.transferTo(dest);
+            Singer singer = new Singer();
+            singer.setId(id);
+            singer.setPicture(storeAvatorPath);
+            boolean flag = singerService.update(singer);
+            if(flag){
+                jsonObject.put(Consts.CODE,1);
+                jsonObject.put(Consts.MSG,"上传成功");
+                jsonObject.put("picture",storeAvatorPath);
+                return jsonObject;
+            }
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"上传失败");
+            return jsonObject;
+        } catch (IOException e) {
+            jsonObject.put(Consts.CODE,0);
+            jsonObject.put(Consts.MSG,"上传失败"+e.getMessage());
+        }finally {
+            return jsonObject;
+        }
+
+    }
+
 }

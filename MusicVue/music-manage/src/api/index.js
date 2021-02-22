@@ -9,3 +9,8 @@ export const getAllSinger = () => get(`singer/allSinger`);
 //添加歌手
 export const setSinger = (params) => post(`singer/add`,params);
 
+//修改歌手
+export const updateSinger = (params) => post(`singer/update`,params);
+
+//删除歌手
+export const delSinger = (id) => get(`singer/delete?id=${id}`);
