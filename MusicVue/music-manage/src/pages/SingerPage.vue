@@ -3,7 +3,7 @@
         <div class="container">
             <div class="handle-box">
                 <el-button type="primary" size="mini" @click="delAll">批量删除</el-button>
-                <el-input v-model="select_word" size='mini' placeholder='请输入歌手名' class="handle-input"></el-input>
+                <el-input v-model="select_word" size='mini' placeholder='请输入歌曲名' class="handle-input"></el-input>
                 <el-button type="primary" size="mini" @click="centerDialogVisible = true">添加歌手</el-button>
             </div>
         </div>
@@ -12,7 +12,7 @@
             <el-table-column label="歌手图片" width="100px" center>
                 <template slot-scope="scope">
                     <div class="singer-img">
-                        <img :src="getUrl(scope.row.picture)" style="width:100%">
+                        <img :src="getUrl(scope.row.pic)" style="width:100%">
                     </div>
                     <el-upload :action="uploadUrl(scope.row.id)" :on-success="handleAvatorSuccess" :on-before="beforeAvatorSuccess">
                         <el-button size="mini">更新图片</el-button>
@@ -53,7 +53,7 @@
             <el-pagination
                 background
                 layout="total,prev,pager,next"
-                :current-page="currentpage"
+                :current-page="currentPage"
                 :page-size="pageSize"
                 :total="tableData.length"
                 @current-change="handleCurrentChange">
@@ -138,7 +138,7 @@
 
 <script>
 import {getAllSinger, setSinger, updateSinger, delSinger} from '../api/index';
-import { mixin } from "../mixins";
+import { mixin } from "../mixins/index";
 
 export default {
     mixins:[mixin],
@@ -167,14 +167,14 @@ export default {
             tempData: [],
             select_word: '',
             pageSize: 5, //分页每页条数
-            currentpage: 1,  //当前页
+            currentPage: 1,  //当前页
             idx: -1,             //当前选择项
             multipleSelection: []   //多选打勾项
         }        
     },
     computed:{
         data(){
-            return this.tableData.slice((this.currentpage - 1)*this.pageSize,this.pageSize * this.currentpage)
+            return this.tableData.slice((this.currentPage - 1)*this.pageSize,this.pageSize * this.currentPage)
         }
     },
     watch:{
@@ -198,7 +198,7 @@ export default {
     methods:{
         //获取当前页
         handleCurrentChange(val){
-            this.currentpage = val;
+            this.currentPage = val;
         },
         //查询所有歌手
         getData(){
@@ -207,6 +207,7 @@ export default {
             getAllSinger().then(res => {
                 this.tempData = res;
                 this.tableData = res;
+                this.currentPage = 1;
             });
         },
 
@@ -214,11 +215,10 @@ export default {
         addSinger(){
             let d = this.registerForm.birth;
             let datetime = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDay();
-            // console.log(datetime);
             let params = new  URLSearchParams();
             params.append('name',this.registerForm.name);           
             params.append('sex',this.registerForm.sex);
-            params.append('picture','/img/singerPicture/hhhh.jpg');           
+            params.append('pic','/img/singerPic/hhh.jpg');           
             params.append('birth',datetime);           
             params.append('location',this.registerForm.location);           
             params.append('introduction',this.registerForm.introduction);
@@ -227,6 +227,7 @@ export default {
             .then(res => {
                 if(res.code == 1){
                     this.getData();
+                    this.registerForm = {};
                     this.notify('添加成功','success');
                 } else {
                     this.notify('添加失败','error');
@@ -280,7 +281,7 @@ export default {
 
         //更新图片
         uploadUrl(id){
-            return `${this.$store.state.HOST}/singer/updateSingerPicture?id=${id}`
+            return `${this.$store.state.HOST}/singer/updateSingerPic?id=${id}`
         },
 
         //删除一名歌手
@@ -289,9 +290,9 @@ export default {
             .then(res => {
                 if(res){
                     this.getData();
-                    this.notify('修改成功','success');
+                    this.notify('删除成功','success');
                 } else {
-                    this.notify('修改失败','error');
+                    this.notify('删除失败','error');
                 }
             })
             .catch(err =>{

@@ -2,23 +2,22 @@
 <!DOCTYPE mapper PUBLIC
         "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.czs.music.dao.SingerMapper">
-    <resultMap id="BaseResultMap" type="com.czs.music.domain.Singer" >
+<mapper namespace="com.javaclimb.music.dao.SingerMapper">
+    <resultMap id="BaseResultMap" type="com.javaclimb.music.domain.Singer" >
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
         <result column="sex" jdbcType="TINYINT" property="sex"/>
-        <result column="picture" jdbcType="VARCHAR" property="picture"/>
+        <result column="pic" jdbcType="VARCHAR" property="pic"/>
         <result column="birth" jdbcType="TIMESTAMP" property="birth"/>
         <result column="location" jdbcType="VARCHAR" property="location"/>
         <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,sex,picture,birth,location,introduction
+        id,name,sex,pic,birth,location,introduction
     </sql>
 
-    <!--增加-->
-    <insert id="insert" parameterType="com.czs.music.domain.Singer">
+    <insert id="insert" parameterType="com.javaclimb.music.domain.Singer">
         insert into singer
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -30,8 +29,8 @@
             <if test="sex != null">
                 sex,
             </if>
-            <if test="picture != null">
-                picture,
+            <if test="pic != null">
+                pic,
             </if>
             <if test="birth != null">
                 birth,
@@ -53,8 +52,8 @@
             <if test="sex != null">
                 #{sex},
             </if>
-            <if test="picture != null">
-                #{picture},
+            <if test="pic != null">
+                #{pic},
             </if>
             <if test="birth != null">
                 #{birth},
@@ -65,11 +64,10 @@
             <if test="introduction != null">
                 #{introduction},
             </if>
-        </trim>
+        </trim>        
     </insert>
     
-    <!--修改-->
-    <update id="update" parameterType="com.czs.music.domain.Singer">
+    <update id="update" parameterType="com.javaclimb.music.domain.Singer">
         update singer
         <set>
             <if test="name != null">
@@ -78,8 +76,8 @@
             <if test="sex != null">
                 sex = #{sex},
             </if>
-            <if test="picture != null">
-                picture = #{picture},
+            <if test="pic != null">
+                pic = #{pic},
             </if>
             <if test="birth != null">
                 birth = #{birth},
@@ -94,13 +92,11 @@
         where id = #{id}
     </update>
 
-    <!--删除-->
     <delete id="delete" parameterType="java.lang.Integer">
         delete from singer
         where id=#{id}
     </delete>
 
-    <!--根据主键查询整个对象-->
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -108,14 +104,12 @@
         where id=#{id}
     </select>
 
-    <!--查询所有歌手-->
     <select id="allSinger" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from singer
     </select>
-    
-    <!--根据歌手名模糊查询列表-->
+
     <select id="singerOfName" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
         <include refid="Base_Column_List"/>
@@ -124,9 +118,26 @@
     </select>
 
     <select id="singerOfSex" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select 
+        select
         <include refid="Base_Column_List"/>
         from singer
         where sex = #{sex}
     </select>
+
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
