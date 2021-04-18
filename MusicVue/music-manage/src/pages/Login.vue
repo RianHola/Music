@@ -4,10 +4,10 @@
     <div class="ms-login">
       <el-form ref="ruleForm" :model="ruleForm" :rules="rules">
         <el-form-item prop="username">
-          <el-input v-model="ruleForm.username" ></el-input>
+          <el-input v-model="ruleForm.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="ruleForm.password" ></el-input>
+          <el-input v-model="ruleForm.password" placeholder="请输入密码" type="password"></el-input>
         </el-form-item>
         <div class="ms-btn">
           <el-button type="primary" @click="onSubmit" class="button">登录</el-button>  
@@ -25,8 +25,8 @@ export default {
   data: function(){
     return {
       ruleForm: {
-        username: "admin",
-        password: "123"
+        username: "",
+        password: ""
       },
       rules: {
         username:[

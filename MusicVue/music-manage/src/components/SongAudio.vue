@@ -31,7 +31,9 @@ export default {
         startPlay(){
             let player = document.querySelector("#player");
             //开始播放
-            player.play();
+            player.play().then(()=>{}).catch(err=>{
+                console.log(err);
+            });
         },
         //播放结束后触发
         ended(){
@@ -41,7 +43,9 @@ export default {
         togglePlay() {
             let player = document.querySelector('#player');
             if (this.isPlay) {
-                player.play();
+                player.play().then(()=>{}).catch(err=>{
+                console.log(err);
+            });
             } else {
                 player.pause();
             }

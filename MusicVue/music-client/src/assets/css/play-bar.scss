@@ -21,6 +21,7 @@
     height: $play-bar-height;
     width: 100%;
     min-width: 1000px;
+    // background-color: $theme-play-bar-color;
     background-color: $theme-play-bar-color;
 
     .item {
@@ -56,7 +57,7 @@
     .playing-speed {
       // 进度条
       height: 50px;
-      width: 600px;
+      width: 900px;
       @include layout(center, center);
 
       .current-time,

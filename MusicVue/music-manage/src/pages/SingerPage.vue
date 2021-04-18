@@ -299,6 +299,7 @@ export default {
                 console.log(err);
             });
             this.deleteVisible = false;
+            this.allDeleteVisible = false;
         },
 
         //转向歌曲管理页面

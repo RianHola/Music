@@ -82,10 +82,10 @@ export const mixin = {
             this.allDeleteVisible = true;
         },
 
-        //批量删除歌手
+        //批量删除
         allDelete(){
             for(let item of this.multipleSelection){
-                this.handleDelete(item.id);
+                this.handleDelete(item.id);         
                 this.deleteRow();
             }
             this.multipleSelection = [];

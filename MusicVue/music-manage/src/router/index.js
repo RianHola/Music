@@ -32,9 +32,22 @@ export default new Router({
         {
           path: '/Song',
           component: resolve => require(['../pages/SongPage.vue'], resolve)
-        }
+        },
+        {
+          path: '/ListSong',
+          component: resolve => require(['../pages/ListSongPage.vue'], resolve)
+        },
+        {
+          path: '/Collect',
+          component: resolve => require(['../pages/CollectPage.vue'], resolve)
+        },
+        {
+          path: '/Comment',
+          component: resolve => require(['../pages/CommentPage.vue'], resolve)
+        },
       ]
     }
 
-  ]
+  ],
+  mode:'history'
 })
