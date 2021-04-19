@@ -15,9 +15,13 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+img/*.jpg
+song/*.mp3
+song/*.m4a
 *.iws
 *.iml
 *.ipr
+
 
 ### NetBeans ###
 /nbproject/private/
