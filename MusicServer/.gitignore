@@ -18,6 +18,7 @@ target/
 img/*.jpg
 song/*.mp3
 song/*.m4a
+avatorImages/*.jpg
 *.iws
 *.iml
 *.ipr
