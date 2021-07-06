@@ -1,10 +1,20 @@
+let validPassword=(rule,value,callback)=>{
+  let reg= /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,20}$/
+  if(!reg.test(value)){callback(new Error('密码必须是由4-20位字母+数字组合'))
+  }else{
+      callback()
+  }
+};
+
 // 匹配规则
 const rules = {
   username: [
     { required: true, trigger: 'blur',message:'请输入用户名' }
   ],
   password: [
-    { required: true, trigger: 'blur',message:'请输入密码' }
+    { required: true, trigger: 'blur',message:'请输入密码' },
+    { validator: validPassword, trigger: 'blur' }
+
   ],
   sex: [
     { required: true, message: '请选择性别', trigger: 'change' }

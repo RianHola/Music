@@ -36,6 +36,8 @@ export default {
     //跳转到指定播放时间
     changeTime(){
       this.$refs.player.currentTime = this.changeTime;
+      this.$store.commit('setIsPlay',true);
+      this.$store.commit('setPlayButtonUrl','#icon-zanting');
     },
     //改变音量
     volume(val){

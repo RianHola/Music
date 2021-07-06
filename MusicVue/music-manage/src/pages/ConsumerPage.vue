@@ -237,7 +237,7 @@
         </el-form-item>
         <el-form-item prop="password" label="密码" size="mini">
           <el-input
-            type="passwoed"
+            type="password"
             v-model="form.password"
             placeholder="密码"
           ></el-input>

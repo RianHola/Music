@@ -36,6 +36,7 @@
             {{item.name}}
           </li>
         </ul>
+        <span>{{username}}</span>
       </div>
   </div>
 </template>
@@ -59,7 +60,7 @@ export default {
     }
   },
   computed:{
-    ...mapGetters(['activeName','logIn','avator'])
+    ...mapGetters(['activeName','logIn','avator','username'])
   },
   mounted() {
     document.querySelector('#user').addEventListener('click',function(e){

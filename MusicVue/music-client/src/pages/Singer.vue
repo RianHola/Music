@@ -1,6 +1,6 @@
 <template>
     <div class="singer">
-        <ul class="singer-header">
+        <ul class="singer-header" >
             <li v-for="(item,index) in singerSex" :key="index" @click="handleChangeView(item.sex)" :class="{active:item.sex==activeName}">
                 {{item.sex}}
             </li>

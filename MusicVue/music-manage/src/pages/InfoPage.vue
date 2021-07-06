@@ -223,7 +223,7 @@ export default {
     //根据歌曲风格获取数量
     getByStyle(style){
       for (let item of this.songStyle.rows) {
-        console.log(item['风格']);
+        // console.log(item['风格']);
         if(item['风格'].includes(style)){
           item['总数']++;
           return false
